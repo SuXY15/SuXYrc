@@ -9,6 +9,7 @@
 # |____/ \__,_/_/\_\  |_|  
 #
 # Copyright 2019 Xingyu Su
+
 R='\033[0;31m'
 G='\033[0;32m'
 B='\033[0;34m'
@@ -35,3 +36,4 @@ echo -e "${B}You need to restart your terminal or machine to enable zsh auto-sta
 # use tuna mirrors
 echo -e "${G}Settings for oh-my-tuna to use tuna mirrors in global environment${N}"
 python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
+
