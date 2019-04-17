@@ -21,7 +21,6 @@ plugins=(
     zsh-autosuggestions zsh-syntax-highlighting git autojump extract
 )
 ZSH_THEME="fishy"
-COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
 
