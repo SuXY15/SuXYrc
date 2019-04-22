@@ -21,6 +21,8 @@ echo -e "${G}Settings for git config${N}"
 git config --global user.name SuXY15
 git config --global user.email suxy15tsinghua@gmail.com
 git config --global credential.helper store
+git config --global http.https://github.com.proxy socks5://127.0.0.1:1086
+git config --global https.https://github.com.proxy socks5://127.0.0.1:1086
 
 # = = = = = = = = = = = = = = = = 
 # for zsh

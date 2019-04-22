@@ -58,7 +58,7 @@ alias htop="htop --sort-key PERCENT_CPU"
 # zsh functions
 # find $2 in $1 with name matching
 ft(){
-    find . -name "$2" -exec grep -il "$1" {} \;
+    find . -name *"$2"* -exec grep -il "$1" {} \;
 }
 
 # mkdir and cd
