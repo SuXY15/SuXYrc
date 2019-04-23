@@ -10,34 +10,29 @@
 #
 # Copyright 2019 Xingyu Su
 
-R='\033[0;31m'
-G='\033[0;32m'
-B='\033[0;34m'
+R='\033[1;31m'
+G='\033[1;32m'
+B='\033[1;34m'
 N='\033[0m'
 
-conf=${USER}.config
+conf=${HOME}/.${USER}.config
 
 function get_config() {
-    local configPath=$1
-    local configName=$2
-    sed -n 's/^[[:space:]]*'$configName'[[:space:]]*=[[:space:]]*\(.*[^[:space:]]\)\([[:space:]]*\)$/\1/p' $configPath
+    local key=$1
+    sed -n 's/^[[:space:]]*'$key'[[:space:]]*=[[:space:]]*\(.*[^[:space:]]\)\([[:space:]]*\)$/\1/p' $conf
 }
 
 function set_config() {
-    local configPath=$1
-    local configName=$2
-    local confgValue=$3
-    sed -i 's/^[[:space:]]*'$configName'[[:space:]]*=.*/'$configName'='$confgValue'/g' $configPath
+    local key=$1
+    local value=$2
+    sed -i -e 's/^[[:space:]]*'$key'[[:space:]]*=.*/'$key' = '$value'/g' $conf
 }
 
 function getStr(){
     case $1 in
-    (Y|y|true)
-        echo '['${G}'y'${N}'/n]';;
-    (N|n|false)
-        echo '[y/'${G}'n'${N}']';;
-    (*)
-        echo '['${G}$1${N}']';;
+    (Y|y|true)  echo '['${G}'y'${N}'/n]';;
+    (N|n|false) echo '[y/'${G}'n'${N}']';;
+    (*)         echo '['${G}$1${N}']';;
     esac
 }
 
@@ -49,72 +44,82 @@ function TF(){
     esac
 }
 
-if [ ! -d $conf ]; then
-    echo -e "${B}${HOME}/.${USER}.config${N} not found."
+if [ ! -f $conf ]; then
+    echo -e "${B}$conf${N} not found."
     echo -e "A default one will be downloaded and modified by yourself."
-    wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/user.config -q -O ${HOME}/.${USER}.config
+    wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/user.config -q -O $conf
+else
+    echo -e "${B}$conf${N} detected."
 fi
 
-_bGit=$(get_config $conf bGit)
-_gName=$(get_config $conf gName)
-_gEmail=$(get_config $conf gEmail)
-_bSocks=$(get_config $conf bSocks)
-_sPort=$(get_config $conf sPort)
-_bZsh=$(get_config $conf bZsh)
-_bTuna=$(get_config $conf bTuna)
+_bGit=$(get_config bGit)
+_gName=$(get_config gName)
+_gEmail=$(get_config gEmail)
+_bSocks=$(get_config bSocks)
+_sPort=$(get_config sPort)
+_bZsh=$(get_config bZsh)
+_bTuna=$(get_config bTuna)
 
-read -p 'Would you want to change config?'$(getStr y) change
-change=${change:-y}
-if [ $change -eq y]; then
-    read -p -e 'Would you want to set github user name and email globally?'$(getStr $_bGit) bGit
-    bGit=${bGit:-_bGit}
-    set_config $conf bGit $bGit
-    if[ $(TF $bGit) ]; then
-        read -p 'Enter your github name:'$(getStr $_gName) gName
-        read -p 'Enter your github email:'$(getStr $_gEmail) gEmail
-        gName=${gName:-${_gName}}
-        gEmail=${gEmail:-${_gEmail}}
-        set_config $conf gName $gName
-        set_config $conf gEmail $gEmail
+echo -e 'Would you want to change config?'$(getStr y)'\c'
+read change; change=${change:-y}
+if [ $(TF $change) == 'true' ]; then
+    echo -e 'Set github user name and email globally?'$(getStr $_bGit)'\c'
+    read bGit; bGit=${bGit:-$_bGit}
+    set_config 'bGit' $bGit
+    if [ $(TF $bGit) == 'true' ]; then
+        echo -e 'Enter your github name:'$(getStr $_gName)'\c'
+        read gName; gName=${gName:-${_gName}}
+        echo -e 'Enter your github email:'$(getStr $_gEmail)'\c'
+        read gEmail; gEmail=${gEmail:-${_gEmail}}
+        set_config gName $gName
+        set_config gEmail $gEmail
     fi
-    read -p 'Would you want to use socks5 proxy for github globally?'$(getStr $_bSocks) bSocks
-    bSocks=${bSocks:-_bSocks}
-    set_config $conf bSocks $bSocks
-    if[ $(TF $bSocks) ]; then
-        read -p 'Enter your sock5 proxy port:'$(getStr $_sPort) sPort
-        sPort=${sPort:-${_sPort}}
-        set_config $conf sPort $sPort
+    echo -e 'Use socks5 proxy for github globally?'$(getStr $_bSocks)'\c'
+    read bSocks; bSocks=${bSocks:-${_bSocks}}
+    set_config bSocks $bSocks
+    if [ $(TF $bSocks) == 'true' ]; then
+        echo -e 'Enter your sock5 proxy port:'$(getStr $_sPort)'\c'
+        read sPort; sPort=${sPort:-${_sPort}}
+        set_config sPort $sPort
     fi
-    read -p 'Would you want to use oh-my-zsh?'$(getStr $_bZsh) bZsh
-    bZsh=${bZsh:-_bZsh}
-    set_config $conf bZsh $bZsh
-    read -p 'Would you want to use oh-my-tuna?'$(getStr $_bTuna) bTuna
-    bTuna=${bTuna:-_bTuna}
-    set_config $conf bTuna $bTuna
+    echo -e 'Would you want to use oh-my-zsh?'$(getStr $_bZsh)'\c'
+    read bZsh; bZsh=${bZsh:-${_bZsh}}
+    set_config bZsh $bZsh
+    echo -e 'Would you want to use oh-my-tuna?'$(getStr $_bTuna)'\c'
+    read bTuna; bTuna=${bTuna:-${_bTuna}}
+    set_config bTuna $bTuna
+else
+    bGit=$_bGit
+    gName=$_gName
+    gEmail=$_gEmail
+    bSocks=$_bSocks
+    sPort=$_sPort
+    bZsh=$_bZsh
+    bTuna=$_bTuna
 fi 
 
 # = = = = = = = = = = = = = = = =
 # for git
-if[ $(TF $bGit) ]; then
+if [ $(TF $bGit) == 'true' ]; then
     echo -e "${G}Settings for git name and email config${N}"
     git config --global user.name ${gName}
     git config --global user.email ${gEmail}
     git config --global credential.helper store
 fi
-if[ $(TF $bSocks) ]; then
+if [ $(TF $bSocks) == 'true' ]; then
     git config --global http.https://github.com.proxy socks5://127.0.0.1:${sPort}
     git config --global https.https://github.com.proxy socks5://127.0.0.1:${sPort}
 fi
 
 # = = = = = = = = = = = = = = = = 
 # for zsh
-if[ $(TF $bZsh) ]; then
+if [ $(TF $bZsh) == 'true' ]; then
     echo -e "${G}Settings for oh-my-zsh and plugins${N}"
     sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -q -O -)"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxyrc -q -O ${HOME}/.suxyrc
-    if $SHELL -neq '/bin/zsh'
+    if [ $SHELL != '/bin/zsh' ]; then
         chsh -s /bin/zsh
         echo -e "${B}You need to restart your terminal or machine to enable zsh auto-start."
     fi
@@ -122,7 +127,7 @@ fi
 
 # = = = = = = = = = = = = = = = = 
 # use tuna mirrors
-if [ $(TF $bTuna) ]; then
+if [ $(TF $bTuna) == 'true' ]; then
     echo -e "${G}Settings for oh-my-tuna to use tuna mirrors in global environment${N}"
     python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
 fi
