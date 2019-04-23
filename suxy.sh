@@ -14,9 +14,10 @@ R='\033[1;31m'
 G='\033[1;32m'
 B='\033[1;34m'
 N='\033[0m'
-
 conf=${HOME}/.${USER}.config
 
+# = = = = = = = = = = = = = = = = 
+# functions
 function get_config() {
     local key=$1
     sed -n 's/^[[:space:]]*'$key'[[:space:]]*=[[:space:]]*\(.*[^[:space:]]\)\([[:space:]]*\)$/\1/p' $conf
@@ -44,14 +45,18 @@ function TF(){
     esac
 }
 
+# = = = = = = = = = = = = = = = = 
+# check configure file existence
 if [ ! -f $conf ]; then
-    echo -e "${B}$conf${N} not found."
+    echo -e "${R}$conf${N} not found."
     echo -e "A default one will be downloaded and modified by yourself."
     wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/user.config -q -O $conf
 else
     echo -e "${B}$conf${N} detected."
 fi
 
+# = = = = = = = = = = = = = = = = 
+# read configure file
 _bGit=$(get_config bGit)
 _gName=$(get_config gName)
 _gEmail=$(get_config gEmail)
@@ -60,6 +65,8 @@ _sPort=$(get_config sPort)
 _bZsh=$(get_config bZsh)
 _bTuna=$(get_config bTuna)
 
+# = = = = = = = = = = = = = = = = 
+# change configure files
 echo -e 'Would you want to change config?'$(getStr y)'\c'
 read change; change=${change:-y}
 if [ $(TF $change) == 'true' ]; then
@@ -116,8 +123,14 @@ fi
 if [ $(TF $bZsh) == 'true' ]; then
     echo -e "${G}Settings for oh-my-zsh and plugins${N}"
     sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -q -O -)"
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    target=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    if [ ! -d $target ]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git 
+    fi
+    target=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    if [ ! -d $target ]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions
+    fi
     wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxyrc -q -O ${HOME}/.suxyrc
     if [ $SHELL != '/bin/zsh' ]; then
         chsh -s /bin/zsh
