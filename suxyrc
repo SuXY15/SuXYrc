@@ -42,17 +42,15 @@ alias gp='git push'
 # = = = = = = = = = = = = = = = = 
 # for vim
 
-# = = = = = = = = = = = = = = = = 
-# for servers
-alias gpu='ssh suxy15@166.111.17.73 -p 2222'
-alias arch='ssh suxy@101.6.61.53'
-alias arsh='ssh share@101.6.61.53'
-alias win='ssh Xingyu\ Su@101.6.61.51'
+# = = = = = = = = = = = = = = = =
+# for GPG
+export GPG_TTY=$(tty)
 
 # = = = = = = = = = = = = = = = = 
 # for convenience
 alias inet='ifconfig | grep inet\ '
 alias htop="htop --sort-key PERCENT_CPU"
+alias rmds='find . -name ".DS_Store" -depth -exec rm {} \;'
 
 # = = = = = = = = = = = = = = = = 
 # zsh functions

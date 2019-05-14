@@ -62,6 +62,8 @@ _gName=$(get_config gName)
 _gEmail=$(get_config gEmail)
 _bSocks=$(get_config bSocks)
 _sPort=$(get_config sPort)
+_bGPG=$(get_config bGPG)
+_sGPG=$(get_config sGPG)
 _bZsh=$(get_config bZsh)
 _bTuna=$(get_config bTuna)
 
@@ -81,6 +83,7 @@ if [ $(TF $change) == 'true' ]; then
         set_config gName $gName
         set_config gEmail $gEmail
     fi
+
     echo -e 'Use socks5 proxy for github globally?'$(getStr $_bSocks)'\c'
     read bSocks; bSocks=${bSocks:-${_bSocks}}
     set_config bSocks $bSocks
@@ -89,6 +92,16 @@ if [ $(TF $change) == 'true' ]; then
         read sPort; sPort=${sPort:-${_sPort}}
         set_config sPort $sPort
     fi
+
+    echo -e 'Use GPG key for github globally?'$(getStr $_bGPG)'\c'
+    read bGPG; bGPG=${bGPG:-${_bGPG}}
+    set_config bGPG $bGPG
+    if [ $(TF $bGPG) == 'true' ]; then
+        echo -e 'Enter your GPG id:'$(getStr $_sGPG)'\c'
+        read sGPG; sGPG=${sGPG:-${_sGPG}}
+        set_config sGPG $sGPG
+    fi
+
     echo -e 'Would you want to use oh-my-zsh?'$(getStr $_bZsh)'\c'
     read bZsh; bZsh=${bZsh:-${_bZsh}}
     set_config bZsh $bZsh
@@ -101,6 +114,8 @@ else
     gEmail=$_gEmail
     bSocks=$_bSocks
     sPort=$_sPort
+    bGPG=$_bGPG
+    sGPG=$_sGPG
     bZsh=$_bZsh
     bTuna=$_bTuna
 fi 
@@ -117,9 +132,8 @@ if [ $(TF $bSocks) == 'true' ]; then
     git config --global http.https://github.com.proxy socks5://127.0.0.1:${sPort}
     git config --global https.https://github.com.proxy socks5://127.0.0.1:${sPort}
 fi
-sGPG=AAAAAAAAAAAAA
-if [ $(TF $bGPG) == 'True' ]; then
-    git config --global user.signingkey $sGPG
+if [ $(TF $bGPG)=='true' ]; then
+    git config --global user.signingkey ${sGPG}
 fi
 
 # = = = = = = = = = = = = = = = = 
@@ -149,3 +163,9 @@ if [ $(TF $bTuna) == 'true' ]; then
     python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
 fi
 
+# = = = = = = = = = = = = = = = = 
+# finish
+echo -e "${G}Settings for SuXYrc is finished.${N}"
+echo -e "Please make sure to have ${G}source $HOME/.suxyrc${N} in your zshrc"
+echo -e "or you can use:\n"
+echo -e "\techo \"source \$HOME/.suxyrc\" >> \$HOME/.zshrc \n"
