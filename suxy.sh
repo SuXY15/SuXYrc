@@ -117,6 +117,10 @@ if [ $(TF $bSocks) == 'true' ]; then
     git config --global http.https://github.com.proxy socks5://127.0.0.1:${sPort}
     git config --global https.https://github.com.proxy socks5://127.0.0.1:${sPort}
 fi
+sGPG=AAAAAAAAAAAAA
+if [ $(TF $bGPG) == 'True' ]; then
+    git config --global user.signingkey $sGPG
+fi
 
 # = = = = = = = = = = = = = = = = 
 # for zsh
