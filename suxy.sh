@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # This is a personal environment setting script of Xingyu Su
 # You can find me at http://suxy.info
@@ -48,11 +48,11 @@ function TF(){
 # = = = = = = = = = = = = = = = = 
 # check configure file existence
 if [ ! -f $conf ]; then
-    echo -e "${R}$conf${N} not found."
-    echo -e "A default one will be downloaded and modified by yourself."
+    echo "${R}$conf${N} not found."
+    echo "A default one will be downloaded and modified by yourself."
     wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/user.config -q -O $conf
 else
-    echo -e "${B}$conf${N} detected."
+    echo "${B}$conf${N} detected."
 fi
 
 # = = = = = = = = = = = = = = = = 
@@ -69,43 +69,43 @@ _bTuna=$(get_config bTuna)
 
 # = = = = = = = = = = = = = = = = 
 # change configure files
-echo -e 'Would you want to change config?'$(getStr y)'\c'
+echo 'Would you want to change config?'$(getStr y)'\c'
 read change; change=${change:-y}
 if [ $(TF $change) == 'true' ]; then
-    echo -e 'Set github user name and email globally?'$(getStr $_bGit)'\c'
+    echo 'Set github user name and email globally?'$(getStr $_bGit)'\c'
     read bGit; bGit=${bGit:-$_bGit}
     set_config 'bGit' $bGit
     if [ $(TF $bGit) == 'true' ]; then
-        echo -e 'Enter your github name:'$(getStr $_gName)'\c'
+        echo 'Enter your github name:'$(getStr $_gName)'\c'
         read gName; gName=${gName:-${_gName}}
-        echo -e 'Enter your github email:'$(getStr $_gEmail)'\c'
+        echo 'Enter your github email:'$(getStr $_gEmail)'\c'
         read gEmail; gEmail=${gEmail:-${_gEmail}}
         set_config gName $gName
         set_config gEmail $gEmail
     fi
 
-    echo -e 'Use socks5 proxy for github globally?'$(getStr $_bSocks)'\c'
+    echo 'Use socks5 proxy for github globally?'$(getStr $_bSocks)'\c'
     read bSocks; bSocks=${bSocks:-${_bSocks}}
     set_config bSocks $bSocks
     if [ $(TF $bSocks) == 'true' ]; then
-        echo -e 'Enter your sock5 proxy port:'$(getStr $_sPort)'\c'
+        echo 'Enter your sock5 proxy port:'$(getStr $_sPort)'\c'
         read sPort; sPort=${sPort:-${_sPort}}
         set_config sPort $sPort
     fi
 
-    echo -e 'Use GPG key for github globally?'$(getStr $_bGPG)'\c'
+    echo 'Use GPG key for github globally?'$(getStr $_bGPG)'\c'
     read bGPG; bGPG=${bGPG:-${_bGPG}}
     set_config bGPG $bGPG
     if [ $(TF $bGPG) == 'true' ]; then
-        echo -e 'Enter your GPG id:'$(getStr $_sGPG)'\c'
+        echo 'Enter your GPG id:'$(getStr $_sGPG)'\c'
         read sGPG; sGPG=${sGPG:-${_sGPG}}
         set_config sGPG $sGPG
     fi
 
-    echo -e 'Would you want to use oh-my-zsh?'$(getStr $_bZsh)'\c'
+    echo 'Would you want to use oh-my-zsh?'$(getStr $_bZsh)'\c'
     read bZsh; bZsh=${bZsh:-${_bZsh}}
     set_config bZsh $bZsh
-    echo -e 'Would you want to use oh-my-tuna?'$(getStr $_bTuna)'\c'
+    echo 'Would you want to use oh-my-tuna?'$(getStr $_bTuna)'\c'
     read bTuna; bTuna=${bTuna:-${_bTuna}}
     set_config bTuna $bTuna
 else
@@ -123,7 +123,7 @@ fi
 # = = = = = = = = = = = = = = = =
 # for git
 if [ $(TF $bGit) == 'true' ]; then
-    echo -e "${G}Settings for git name and email config${N}"
+    echo "${G}Settings for git name and email config${N}"
     git config --global user.name ${gName}
     git config --global user.email ${gEmail}
     git config --global credential.helper store
@@ -139,7 +139,7 @@ fi
 # = = = = = = = = = = = = = = = = 
 # for zsh
 if [ $(TF $bZsh) == 'true' ]; then
-    echo -e "${G}Settings for oh-my-zsh and plugins${N}"
+    echo "${G}Settings for oh-my-zsh and plugins${N}"
     sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -q -O -)"
     target=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     if [ ! -d $target ]; then
@@ -152,20 +152,20 @@ if [ $(TF $bZsh) == 'true' ]; then
     wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxyrc -q -O ${HOME}/.suxyrc
     if [ $SHELL != '/bin/zsh' ]; then
         chsh -s /bin/zsh
-        echo -e "${B}You need to restart your terminal or machine to enable zsh auto-start."
+        echo "${B}You need to restart your terminal or machine to enable zsh auto-start."
     fi
 fi
 
 # = = = = = = = = = = = = = = = = 
 # use tuna mirrors
 if [ $(TF $bTuna) == 'true' ]; then
-    echo -e "${G}Settings for oh-my-tuna to use tuna mirrors in global environment${N}"
+    echo "${G}Settings for oh-my-tuna to use tuna mirrors in global environment${N}"
     python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
 fi
 
 # = = = = = = = = = = = = = = = = 
 # finish
-echo -e "${G}Settings for SuXYrc is finished.${N}"
-echo -e "Please make sure to have ${G}source $HOME/.suxyrc${N} in your zshrc"
-echo -e "or you can use:\n"
-echo -e "\techo \"source \$HOME/.suxyrc\" >> \$HOME/.zshrc \n"
+echo "${G}Settings for SuXYrc is finished.${N}"
+echo "Please make sure to have ${G}source $HOME/.suxyrc${N} in your zshrc"
+echo "or you can use:\n"
+echo "\techo \"source \$HOME/.suxyrc\" >> \$HOME/.zshrc \n"
