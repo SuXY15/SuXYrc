@@ -18,7 +18,7 @@ export PATH="/usr/local/sbin:/usr/local/bin:$PATH"
 # for zsh
 export ZSH="$HOME/.oh-my-zsh"
 plugins=(
-    zsh-autosuggestions zsh-syntax-highlighting git autojump extract
+    zsh-autosuggestions zsh-syntax-highlighting git extract
 )
 ZSH_THEME="fishy"
 
@@ -110,3 +110,21 @@ decode(){
   done
 }
 
+# count chinese characters' number in latex
+texcount(){
+  let "tot_zh_num=0"
+  let "tot_en_num=0"
+  echo "zh" "\t" "en"
+  for i in $*
+  do
+    let "cnum=$(detex $i | wc -c)"
+    let "mnum=$(detex $i | wc -m)"
+    let "wnum=$(detex $i | wc -w)"
+    let "zh_num=($cnum-$mnum)/2"
+    let "en_num=$wnum"
+    let "tot_zh_num=$tot_zh_num+$zh_num"
+    let "tot_en_num=$tot_en_num+$en_num"
+    echo $zh_num "\t" $en_num "\t" $i
+  done
+  echo $tot_zh_num "\t" $tot_en_num
+}
