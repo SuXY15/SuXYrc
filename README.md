@@ -7,6 +7,12 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
 
 + install zsh first, by `apt-get install zsh` or `sudo pacman -S zsh` or `yum -y install zsh`
 
++ install oh-my-zsh
+
+  ```shell
+  sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -q -O -)"
+  ```
+
 + install zsh plugins:
 
   + syntax-highlighting
@@ -20,6 +26,18 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
     ```shell
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     ```
+
++ download suxyrc
+
+  ```shell
+  wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxyrc -q -O ${HOME}/.suxyrc
+  ```
+
++ add source to zshrc
+
+  ```shell
+  source "$HOME/.suxyrc"
+  ```
 
 + generate ssh-key
 
