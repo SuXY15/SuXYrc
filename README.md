@@ -50,7 +50,7 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
   ```shell
   git config --global user.name SuXY15
   git config --global user.email suxy15tsinghua@gmail.com
-  
+
   git config --global credential.helper store
   ```
 
@@ -59,3 +59,9 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
   ```shell
   python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
   ```
+
++ vim
+  ```shell
+  wget "https://raw.githubusercontent.com/SuXY15/SuXYrc/vimrc" -O ~/.vimrc
+  ```
+

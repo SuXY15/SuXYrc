@@ -4,17 +4,17 @@
 # You can find me at http://suxy.info
 #  ____       __  ____   __
 # / ___| _   _\ \/ /\ \ / /
-# \___ \| | | |\  /  \ V / 
-#  ___) | |_| |/  \   | |  
-# |____/ \__,_/_/\_\  |_|  
+# \___ \| | | |\  /  \ V /
+#  ___) | |_| |/  \   | |
+# |____/ \__,_/_/\_\  |_|
 #
 # Copyright 2019 Xingyu Su
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # for env
 export PATH="/usr/local/sbin:/usr/local/bin:$PATH"
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # for zsh
 export ZSH="$HOME/.oh-my-zsh"
 plugins=(
@@ -24,7 +24,7 @@ ZSH_THEME="fishy"
 
 source $ZSH/oh-my-zsh.sh
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # for python
 alias python='/usr/bin/env python3'
 alias python2='/usr/bin/env python'
@@ -32,27 +32,27 @@ alias pip='/usr/bin/env pip3'
 alias pip2='/usr/bin/env pip'
 alias note="jupyter notebook"
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # for git
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # for vim
 
 # = = = = = = = = = = = = = = = =
 # for GPG
 export GPG_TTY=$(tty)
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # for convenience
 alias inet='ifconfig | grep inet\ '
 alias htop="htop --sort-key PERCENT_CPU"
 alias rmds='find . -name ".DS_Store" -depth -exec rm {} \;'
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # zsh functions
 # find $2 in $1 with name matching
 ft(){
