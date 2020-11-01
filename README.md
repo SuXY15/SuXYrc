@@ -1,11 +1,14 @@
 #### Usage
+
++ This script is used to set personal environment, including zsh, git, vim and linux sources.
+
 ```shell
 sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q -O -)"
 ```
 
 ### Personal Scripts
 
-+ install zsh first, by `apt-get install zsh` or `sudo pacman -S zsh` or `yum -y install zsh`
++ install zsh first
 
 + install oh-my-zsh
 
@@ -33,13 +36,14 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
   wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxyrc -q -O ${HOME}/.suxyrc
   ```
 
-+ add source to zshrc
++ add source in .zshrc
 
   ```shell
   source "$HOME/.suxyrc"
+  source $ZSH/oh-my-zsh.sh
   ```
 
-+ generate ssh-key
++ generate ssh-key if nessary
 
   ```shell
   ssh-keygen -t rsa -C "suxy15tsinghua@gmail.com"
@@ -53,7 +57,12 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
 
   git config --global credential.helper store
   ```
++ set github socks port
 
+  ```shell
+  git config --global http.https://github.com.proxy socks5://127.0.0.1:1086
+  git config --global https.https://github.com.proxy socks5://127.0.0.1:1086
+  ```
 + tuna
 
   ```shell

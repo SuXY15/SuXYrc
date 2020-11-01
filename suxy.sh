@@ -57,88 +57,88 @@ fi
 
 # = = = = = = = = = = = = = = = = 
 # read configure file
-_bGit=$(get_config bGit)
-_gName=$(get_config gName)
-_gEmail=$(get_config gEmail)
-_bSocks=$(get_config bSocks)
-_sPort=$(get_config sPort)
-_bGPG=$(get_config bGPG)
-_sGPG=$(get_config sGPG)
-_bZsh=$(get_config bZsh)
-_bTuna=$(get_config bTuna)
+_Git=$(get_config Git)
+_GitName=$(get_config GitName)
+_GitEmail=$(get_config GitEmail)
+_GitSocks=$(get_config GitSocks)
+_GitSocksPort=$(get_config GitSocksPort)
+_GPG=$(get_config GPG)
+_GPGKey=$(get_config GPGKey)
+_Zsh=$(get_config Zsh)
+_Tuna=$(get_config Tuna)
 
 # = = = = = = = = = = = = = = = = 
 # change configure files
 echo 'Would you want to change config?'$(getStr y)'\c'
 read change; change=${change:-y}
 if [ $(TF $change) == 'true' ]; then
-    echo 'Set github user name and email globally?'$(getStr $_bGit)'\c'
-    read bGit; bGit=${bGit:-$_bGit}
-    set_config 'bGit' $bGit
-    if [ $(TF $bGit) == 'true' ]; then
-        echo 'Enter your github name:'$(getStr $_gName)'\c'
-        read gName; gName=${gName:-${_gName}}
-        echo 'Enter your github email:'$(getStr $_gEmail)'\c'
-        read gEmail; gEmail=${gEmail:-${_gEmail}}
-        set_config gName $gName
-        set_config gEmail $gEmail
+    echo 'Set github user name and email globally?'$(getStr $_Git)'\c'
+    read Git; Git=${Git:-$_Git}
+    set_config 'Git' $Git
+    if [ $(TF $Git) == 'true' ]; then
+        echo 'Enter your github name:'$(getStr $_GitName)'\c'
+        read GitName; GitName=${GitName:-${_GitName}}
+        echo 'Enter your github email:'$(getStr $_GitEmail)'\c'
+        read GitEmail; GitEmail=${GitEmail:-${_GitEmail}}
+        set_config GitName $GitName
+        set_config GitEmail $GitEmail
     fi
 
-    echo 'Use socks5 proxy for github globally?'$(getStr $_bSocks)'\c'
-    read bSocks; bSocks=${bSocks:-${_bSocks}}
-    set_config bSocks $bSocks
-    if [ $(TF $bSocks) == 'true' ]; then
-        echo 'Enter your sock5 proxy port:'$(getStr $_sPort)'\c'
-        read sPort; sPort=${sPort:-${_sPort}}
-        set_config sPort $sPort
+    echo 'Use socks5 proxy for github globally?'$(getStr $_GitSocks)'\c'
+    read GitSocks; GitSocks=${GitSocks:-${_GitSocks}}
+    set_config GitSocks $GitSocks
+    if [ $(TF $GitSocks) == 'true' ]; then
+        echo 'Enter your sock5 proxy port:'$(getStr $_GitSocksPort)'\c'
+        read GitSocksPort; GitSocksPort=${GitSocksPort:-${_GitSocksPort}}
+        set_config GitSocksPort $GitSocksPort
     fi
 
-    echo 'Use GPG key for github globally?'$(getStr $_bGPG)'\c'
-    read bGPG; bGPG=${bGPG:-${_bGPG}}
-    set_config bGPG $bGPG
-    if [ $(TF $bGPG) == 'true' ]; then
-        echo 'Enter your GPG id:'$(getStr $_sGPG)'\c'
-        read sGPG; sGPG=${sGPG:-${_sGPG}}
-        set_config sGPG $sGPG
+    echo 'Use GPG key for github globally?'$(getStr $_GPG)'\c'
+    read GPG; GPG=${GPG:-${_GPG}}
+    set_config GPG $GPG
+    if [ $(TF $GPG) == 'true' ]; then
+        echo 'Enter your GPG id:'$(getStr $_GPGKey)'\c'
+        read GPGKey; GPGKey=${GPGKey:-${_GPGKey}}
+        set_config GPGKey $GPGKey
     fi
 
-    echo 'Would you want to use oh-my-zsh?'$(getStr $_bZsh)'\c'
-    read bZsh; bZsh=${bZsh:-${_bZsh}}
-    set_config bZsh $bZsh
-    echo 'Would you want to use oh-my-tuna?'$(getStr $_bTuna)'\c'
-    read bTuna; bTuna=${bTuna:-${_bTuna}}
-    set_config bTuna $bTuna
+    echo 'Would you want to use oh-my-zsh?'$(getStr $_Zsh)'\c'
+    read Zsh; Zsh=${Zsh:-${_Zsh}}
+    set_config Zsh $Zsh
+    echo 'Would you want to use oh-my-tuna?'$(getStr $_Tuna)'\c'
+    read Tuna; Tuna=${Tuna:-${_Tuna}}
+    set_config Tuna $Tuna
 else
-    bGit=$_bGit
-    gName=$_gName
-    gEmail=$_gEmail
-    bSocks=$_bSocks
-    sPort=$_sPort
-    bGPG=$_bGPG
-    sGPG=$_sGPG
-    bZsh=$_bZsh
-    bTuna=$_bTuna
+    Git=$_Git
+    GitName=$_GitName
+    GitEmail=$_GitEmail
+    GitSocks=$_GitSocks
+    GitSocksPort=$_GitSocksPort
+    GPG=$_GPG
+    GPGKey=$_GPGKey
+    Zsh=$_Zsh
+    Tuna=$_Tuna
 fi 
 
 # = = = = = = = = = = = = = = = =
 # for git
-if [ $(TF $bGit) == 'true' ]; then
+if [ $(TF $Git) == 'true' ]; then
     echo "${G}Settings for git name and email config${N}"
-    git config --global user.name ${gName}
-    git config --global user.email ${gEmail}
+    git config --global user.name ${GitName}
+    git config --global user.email ${GitEmail}
     git config --global credential.helper store
 fi
-if [ $(TF $bSocks) == 'true' ]; then
-    git config --global http.https://github.com.proxy socks5://127.0.0.1:${sPort}
-    git config --global https.https://github.com.proxy socks5://127.0.0.1:${sPort}
+if [ $(TF $GitSocks) == 'true' ]; then
+    git config --global http.https://github.com.proxy socks5://127.0.0.1:${GitSocksPort}
+    git config --global https.https://github.com.proxy socks5://127.0.0.1:${GitSocksPort}
 fi
-if [ $(TF $bGPG)=='true' ]; then
-    git config --global user.signingkey ${sGPG}
+if [ $(TF $GPG)=='true' ]; then
+    git config --global user.signingkey ${GPGKey}
 fi
 
 # = = = = = = = = = = = = = = = = 
 # for zsh
-if [ $(TF $bZsh) == 'true' ]; then
+if [ $(TF $Zsh) == 'true' ]; then
     echo "${G}Settings for oh-my-zsh and plugins${N}"
     sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -q -O -)"
     target=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -158,7 +158,7 @@ fi
 
 # = = = = = = = = = = = = = = = = 
 # use tuna mirrors
-if [ $(TF $bTuna) == 'true' ]; then
+if [ $(TF $Tuna) == 'true' ]; then
     echo "${G}Settings for oh-my-tuna to use tuna mirrors in global environment${N}"
     python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
 fi
