@@ -4,9 +4,9 @@
 # You can find me at http://suxy.info
 #  ____       __  ____   __
 # / ___| _   _\ \/ /\ \ / /
-# \___ \| | | |\  /  \ V / 
-#  ___) | |_| |/  \   | |  
-# |____/ \__,_/_/\_\  |_|  
+# \___ \| | | |\  /  \ V /
+#  ___) | |_| |/  \   | |
+# |____/ \__,_/_/\_\  |_|
 #
 # Copyright 2019 Xingyu Su
 
@@ -16,7 +16,7 @@ B='\033[1;34m'
 N='\033[0m'
 conf=${HOME}/.${USER}.config
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # functions
 function get_config() {
     local key=$1
@@ -45,7 +45,7 @@ function TF(){
     esac
 }
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # check configure file existence
 if [ ! -f $conf ]; then
     echo "${R}$conf${N} not found."
@@ -55,7 +55,7 @@ else
     echo "${B}$conf${N} detected."
 fi
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # read configure file
 _Git=$(get_config Git)
 _GitName=$(get_config GitName)
@@ -67,7 +67,7 @@ _GPGKey=$(get_config GPGKey)
 _Zsh=$(get_config Zsh)
 _Tuna=$(get_config Tuna)
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # change configure files
 echo 'Would you want to change config?'$(getStr y)'\c'
 read change; change=${change:-y}
@@ -118,7 +118,7 @@ else
     GPGKey=$_GPGKey
     Zsh=$_Zsh
     Tuna=$_Tuna
-fi 
+fi
 
 # = = = = = = = = = = = = = = = =
 # for git
@@ -156,14 +156,14 @@ if [ $(TF $Zsh) == 'true' ]; then
     fi
 fi
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # use tuna mirrors
 if [ $(TF $Tuna) == 'true' ]; then
     echo "${G}Settings for oh-my-tuna to use tuna mirrors in global environment${N}"
     python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
 fi
 
-# = = = = = = = = = = = = = = = = 
+# = = = = = = = = = = = = = = = =
 # finish
 echo "${G}Settings for SuXYrc is finished.${N}"
 echo "Please make sure to have ${G}source $HOME/.suxyrc${N} in your zshrc"
