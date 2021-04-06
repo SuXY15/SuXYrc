@@ -8,6 +8,8 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
 
 ### Personal Scripts
 
+#### 1. For zsh
+
 + install zsh first
 
 + install oh-my-zsh
@@ -36,12 +38,14 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
   wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxyrc -q -O ${HOME}/.suxyrc
   ```
 
-+ add source in .zshrc
++ add source in `~/.zshrc`
 
   ```shell
-  source "$HOME/.suxyrc"
+  source $HOME/.suxyrc
   source $ZSH/oh-my-zsh.sh
   ```
+
+#### 2. For Github
 
 + generate ssh-key if nessary
 
@@ -57,20 +61,28 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
 
   git config --global credential.helper store
   ```
+  
 + set github socks port
 
   ```shell
   git config --global http.https://github.com.proxy socks5://127.0.0.1:1086
   git config --global https.https://github.com.proxy socks5://127.0.0.1:1086
   ```
+
+#### 3. For Vim
+
++ vim
+  ```shell
+  wget "https://raw.githubusercontent.com/SuXY15/SuXYrc/vimrc" -O ~/.vimrc
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  vim +PlugInstall +qall
+  ```
+
+#### 4. Others
+
 + tuna
 
   ```shell
   python -c "$(wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py -q -O -)" --global
   ```
-
-+ vim
-  ```shell
-  wget "https://raw.githubusercontent.com/SuXY15/SuXYrc/vimrc" -O ~/.vimrc
-  ```
-

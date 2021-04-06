@@ -1,25 +1,116 @@
-" 不与 vi 兼容
-set nocompatible 
+" Make Vim more useful
+set nocompatible
+set backspace=2
 
-" 打开行号显示
+" Use the OS clipboard by default (on versions compiled with `+clipboard`)
+set clipboard=unnamed
+
+" Enhance command-line completion
+set wildmenu
+set wildmode=longest:list,full
+
+" Allow cursor keys in insert mode
+set esckeys
+
+" Allow backspace in insert mode
+set backspace=indent,eol,start
+
+" Optimize for fast terminal connections
+set ttyfast
+
+" Add the g flag to search/replace by default
+set gdefault
+
+" Use UTF-8 without BOM
+set encoding=utf-8 nobomb
+
+" Change mapleader
+let mapleader=","
+
+" Don’t add empty newlines at the end of files
+set binary
+set noeol
+
+" Respect modeline in files
+set modeline
+set modelines=4
+
+" Enable line numbers
 set number
 
-" 打开语法高亮
+" Enable syntax highlighting
 syntax on
 
-" 底部显示当前模式
-set showmode
+" Highlight current line
+set cursorline
 
-" 显示输入的指令
-set showcmd
+" Make tabs as wide as two spaces
+set tabstop=4
 
-" 支持鼠标
+" Show “invisible” characters
+set listchars=tab:▸\ ,trail:·,nbsp:_
+set list
+
+" Highlight searches
+set hlsearch
+
+" Ignore case of searches
+set ignorecase
+
+" Highlight dynamically as pattern is typed
+set incsearch
+
+" Always show status line
+set laststatus=2
+
+" Enable mouse in all modes
 set mouse=a
 
-" 使用 utf-8 编码
-set encoding=utf-8
+" Disable error bells
+set noerrorbells
 
-" 启用 256 色
+" Don’t reset cursor to start of line when moving around.
+set nostartofline
+
+" Show the cursor position
+set ruler
+
+" Don’t show the intro message when starting Vim
+set shortmess=atI
+
+" Show the current mode
+set showmode
+
+" Show the filename in the window titlebar
+set title
+
+" Show the (partial) command as it’s being typed
+set showcmd
+
+" Start scrolling three lines before the horizontal window border
+set scrolloff=3
+
+" Strip trailing whitespace (,ss)
+function! StripWhitespace()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	:%s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfunction
+noremap <leader>ss :call StripWhitespace()<CR>
+
+" Automatic commands
+if has("autocmd")
+	" Enable file type detection
+	filetype on
+	" Treat .json files as .js
+	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+	" Treat .md files as Markdown
+	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+endif
+
+" enable 256 color mode
 set t_Co=256
 
 " 启用文件类型检查
@@ -27,18 +118,6 @@ filetype indent on
 
 " 自动缩进
 set autoindent
-
-" tab 对应空格数量
-set tabstop=4
-
-" 缩进对应字符数量
-set shiftwidth=4
-
-" 自动将 tab 转为空格
-set expandtab
-
-" 高亮当前行
-set cursorline
 
 " 设置行宽
 set textwidth=80
@@ -52,29 +131,11 @@ set linebreak
 " 设置换行边缘空白宽度
 set wrapmargin=2
 
-" 设置垂直滚动上下高度
-set scrolloff=5
-
 " 设置水平滚动两侧高度
 set sidescrolloff=15
 
-" 是否显示状态栏 
-set laststatus=2
-
-" 显示光标位置
-set ruler
-
 " 括号匹配
 set showmatch
-
-" 高亮搜索
-set hlsearch
-
-" 增量搜索
-set incsearch
-
-" 搜索忽略大小写
-set ignorecase
 
 " 禁止备份文件
 set nobackup
@@ -94,11 +155,13 @@ set history=1000
 " 监视文件外部修改
 set autoread
 
-" 显示行尾空格
-set listchars=tab:»■,trail:■
-set list
+" For vim-plug
+call plug#begin('~/.vim/plugged')
+  Plug 'preservim/nerdtree'
+  Plug 'preservim/nerdcommenter'
+  Plug 'kien/ctrlp.vim'
+call plug#end()
 
-" 支持命令tab补全
-set wildmenu
-set wildmode=longest:list,full
+" For NERDCommenter
+let g:NERDSpaceDelims = 1
 
