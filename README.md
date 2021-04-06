@@ -73,7 +73,7 @@ sh -c "$(wget https://raw.githubusercontent.com/SuXY15/SuXYrc/master/suxy.sh -q 
 
 + vim
   ```shell
-  wget "https://raw.githubusercontent.com/SuXY15/SuXYrc/vimrc" -O ~/.vimrc
+  wget "https://raw.githubusercontent.com/SuXY15/SuXYrc/master/vimrc" -O ~/.vimrc
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   vim +PlugInstall +qall
