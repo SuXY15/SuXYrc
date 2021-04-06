@@ -165,3 +165,15 @@ call plug#end()
 " For NERDCommenter
 let g:NERDSpaceDelims = 1
 
+" My scripts
+function! CommentHide()
+	:highlight Comment guifg=bg ctermfg=black
+endfunction
+noremap <leader>hh :call CommentHide()<CR>
+
+function! CommentFold()
+	:set fdm=expr
+	:set fde=getline(v:lnum)=~'^\\s#'?1:getline(prevnonblank(v:lnum))=~'^\\s#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
+	:highlight Folded ctermbg=none ctermfg=black
+endfunction
+noremap <leader>ff :call CommentFold()<CR>
